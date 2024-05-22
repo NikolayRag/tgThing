@@ -15,10 +15,10 @@
 
 - kiThing API entrance
   - kiTMessage  Message instance
-  - kiTSwitch Conversation logic
+  - kiTFlow Conversation logic
     - kiTChar Virtual character
-    - kiTTGEntry  Telegram API connection
-    - kiTGPTEntry GPT API connection
+    - kiTTeleAgent  Telegram API connection
+    - kiTAIAgent GPT API connection
   - kiTRobot  Local message proccessing
 
   - kiTUser User account
@@ -29,10 +29,10 @@
 ---
 ###Workflow
 
-* There're 3 logical interfaces: with Telegram (kiTTGEntry), with GPT (kiTGPTEntry),
+* There're 3 logical interfaces: with Telegram (kiTTeleAgent), with GPT (kiTAIEntry),
   and with Character (kiTChar) which is technically a GPT Behavior Tuner.
 
-* Logic manager (kiTSwitch) is procceeding User message:
+* Logic manager (kiTFlow) is procceeding User message:
   
   - Messages are parsed and long-term context is retreived which describe user's
     virtual Character.
