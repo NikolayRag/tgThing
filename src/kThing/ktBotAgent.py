@@ -166,10 +166,11 @@ class ktBotAgent():
 	'''
 	def listen(self):
 		while self.pollingFlag:
-				try:
-					self.tgBotInstance.polling(*args, **kwargs)
-				except Exception as e:
-					time.sleep(5)
+			try:
+				log.info('Bot Polling')
+				self.tgBotInstance.infinity_polling()
+			except Exception as e:
+				time.sleep(5)
 
 		log.info("Bot polling out")
 
