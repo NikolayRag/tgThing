@@ -164,8 +164,6 @@ class ktBotAgent():
 	Run
 	'''
 	def listen(self):
-		self.tgBotInstance.infinity_polling()
-
 		while self.pollingFlag:
 				try:
 					self.tgBotInstance.polling(*args, **kwargs)
