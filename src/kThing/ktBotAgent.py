@@ -89,7 +89,7 @@ class ktBotAgent():
 
 
 		if self.messageCB:
-			self.messageCB(_message)
+			self.messageCB(_message, isMsgCommand)
 
 
 
