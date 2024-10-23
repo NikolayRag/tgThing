@@ -4,6 +4,7 @@ from .support import *
 # https://pytba.readthedocs.io/en/latest/sync_version/index.html
 import telebot
 
+import time
 
 
 '''
