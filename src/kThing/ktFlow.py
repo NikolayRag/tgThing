@@ -62,19 +62,19 @@ class ktFlow():
 
 
 	def __tgCB(self, _msg, isCommand):
-		cUser = _msg.from_user.id
-		log.info(f"User {cUser}")
+		cUserId = _msg.from_user.id
+		log.info(f"User {cUserId}")
 
 		if isCommand:
-			self.goCmd(cUser, _msg.text)
+			self.goCmd(cUserId, _msg.text)
 			return
 
 
-		self.botAgent.tgDecorate(cUser)
+		self.botAgent.tgDecorate(cUserId)
 
-		aiA = self.goAI(cUser, _msg)
+		aiA = self.goAI(cUserId, _msg)
 
-		self.botAgent.tgSend(cUser, f"{aiA['answer']}", replyTo=_msg.id)
+		self.botAgent.tgSend(cUserId, f"{aiA['answer']}", replyTo=_msg.id)
 
 
 
