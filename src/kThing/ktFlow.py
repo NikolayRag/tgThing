@@ -34,6 +34,8 @@ class ktFlow():
 
 	def __tgCB(self, _msg, isCommand):
 		if isCommand:
+			log.warning(f"Command: {_msg.text}")
+
 			# -todo 36 (issue, review) +0: dont stop at first
 			if _msg.text == '/stopstop':
 				self.botAgent.shut()
