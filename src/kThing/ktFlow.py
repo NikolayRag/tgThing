@@ -32,7 +32,18 @@ class ktFlow():
 	memAgent = None
 
 
-	def __tgCB(self, _msg):
+	def __tgCB(self, _msg, isCommand):
+		if isCommand:
+			# -todo 36 (issue, review) +0: dont stop at first
+			if _msg.text == '/stop':
+
+				log.error('Stop all')
+				
+				self.botAgent.shut()
+
+				return
+
+
 		cUser = _msg.from_user.id
 		log.info(f"User {cUser}")
 #		cChar = ktChar(cUser)
