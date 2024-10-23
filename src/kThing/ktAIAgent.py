@@ -1,9 +1,6 @@
 from .support import *
 
 
-from openai import OpenAI
-
-
 import requests
 import os
 
