@@ -1,3 +1,4 @@
+from .support import *
 '''
 Conversation fabric.
 
@@ -46,7 +47,7 @@ class ktFlow():
 		log.info(f"Ai anwser: {aiA}")
 
 
-		self.botAgent.tgSend(cUser, f"{aiA['answer']}", perlyTo=_msg.id)
+		self.botAgent.tgSend(cUser, f"{aiA['answer']}", replyTo=_msg.id)
 
 
 
