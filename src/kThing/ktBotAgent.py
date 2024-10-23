@@ -170,7 +170,8 @@ class ktBotAgent():
 				log.info('Bot Polling')
 				self.tgBotInstance.infinity_polling()
 			except Exception as e:
-				time.sleep(5)
+				log.error('Bot Polling error, retry in 2sec')
+				time.sleep(2)
 
 		log.info("Bot polling out")
 

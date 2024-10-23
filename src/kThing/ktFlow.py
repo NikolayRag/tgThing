@@ -35,11 +35,10 @@ class ktFlow():
 	def __tgCB(self, _msg, isCommand):
 		if isCommand:
 			# -todo 36 (issue, review) +0: dont stop at first
-			if _msg.text == '/stop':
-
-				log.error('Stop all')
-				
+			if _msg.text == '/stopstop':
 				self.botAgent.shut()
+
+				log.error('Stop pending')
 
 
 			return
