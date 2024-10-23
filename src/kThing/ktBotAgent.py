@@ -68,6 +68,7 @@ class ktBotAgent():
 	def __listener (self, _message, isApp=False):
 		_chatId = _message.chat.id
 		msgReply= None
+		isMsgCommand = False
 
 		#CB with 
 		if isApp:
@@ -79,9 +80,10 @@ class ktBotAgent():
 			msgReply = webAppData.button_text
 			self.tgSend( _chatId, msgReply)
 
-		else:
-			if telebot.util.is_command(_message.text):
-				None
+			return
+
+		if telebot.util.is_command(_message.text):
+			isMsgCommand = True
 
 
 		if self.messageCB:
