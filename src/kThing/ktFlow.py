@@ -32,33 +32,47 @@ class ktFlow():
 	memAgent = None
 
 
-	def __tgCB(self, _msg, isCommand):
-		if isCommand:
-			log.warning(f"Command: {_msg.text}")
-
-			# -todo 36 (issue, review) +0: dont stop at first
-			if _msg.text == '/stopstop':
-				self.botAgent.shut()
-
-				log.error('Stop pending')
 
 
-			return
 
 
-		cUser = _msg.from_user.id
-		log.info(f"User {cUser}")
-#		cChar = ktChar(cUser)
-
-		self.botAgent.tgDecorate(cUser)
 
 
+
+
+	def goCmd(self, _user, _cmd):
+		# -todo 36 (issue, review) +0: dont stop at first
+		log.info(f"Command: {_cmd}")
+
+
+		if _cmd == '/stopstop':
+			self.botAgent.shut()
+
+			log.error('Stop pending')
+
+
+
+	def goAI(self, _user, _msg):
 		aiLang = 'EN'
 		systemmsg = f"default language - {aiLang}"
 		
 		aiA = self.aiAgent.speak([['system',systemmsg],['user',_msg.text]])
-		log.info(f"Ai anwser: {aiA}")
+		return aiA
 
+
+
+	def __tgCB(self, _msg, isCommand):
+		cUser = _msg.from_user.id
+		log.info(f"User {cUser}")
+
+		if isCommand:
+			self.goCmd(cUser, _msg.text)
+			return
+
+
+		self.botAgent.tgDecorate(cUser)
+
+		aiA = self.goAI(cUser, _msg)
 
 		self.botAgent.tgSend(cUser, f"{aiA['answer']}", replyTo=_msg.id)
 
