@@ -33,18 +33,18 @@ class ktFlow():
 
 
 
-
-
-
-
-
-
-
 	def goCmd(self, _user, _cmd):
-		# -todo 36 (issue, review) +0: dont stop at first
 		log.info(f"Command: {_cmd}")
 
+		if _cmd == '/start':
 
+
+			self.botAgent.tgSend(_user, f"started")
+
+			return
+
+
+		# -todo 36 (issue, review) +0: dont stop at first
 		if _cmd == '/stopstop':
 			self.botAgent.shut()
 
