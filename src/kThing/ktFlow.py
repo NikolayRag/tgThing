@@ -1,4 +1,8 @@
 from .support import *
+
+from .ktChar import *
+
+
 '''
 Conversation fabric.
 
@@ -52,7 +56,7 @@ class ktFlow():
 
 
 
-	def goAI(self, _user, _msg):
+	def goAI(self, _char, _msg):
 		aiLang = 'EN'
 		systemmsg = f"default language - {aiLang}"
 		
@@ -62,19 +66,22 @@ class ktFlow():
 
 
 	def __tgCB(self, _msg, isCommand):
-		cUserId = _msg.from_user.id
-		log.info(f"User {cUserId}")
+		cChar = ktChar(
+			_msg.from_user.id
+		)
 
 		if isCommand:
-			self.goCmd(cUserId, _msg.text)
+			self.goCmd(cChar.getId(), _msg.text)
 			return
 
 
-		self.botAgent.tgDecorate(cUserId)
+		self.botAgent.tgDecorate(cChar.getId())
 
-		aiA = self.goAI(cUserId, _msg)
+		cChar.addQ(_msg.text)
+		aiA = self.goAI(cChar, _msg)
+		cChar.addA(aiA['answer'])
 
-		self.botAgent.tgSend(cUserId, f"{aiA['answer']}", replyTo=_msg.id)
+		self.botAgent.tgSend(cChar.getId(), f"{aiA['answer']}", replyTo=_msg.id)
 
 
 
