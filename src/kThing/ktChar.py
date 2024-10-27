@@ -10,6 +10,11 @@ It is specifically focused on impersonated AI behavior - interpreting and respon
 class ktChar():
    uId = 0
 
+   firstName = ''
+   lastName = ''
+   nickName = ''
+   lang = 'en'
+
    defHello: 'hi'
 
 
@@ -19,8 +24,26 @@ class ktChar():
    	self.uId = _id
 
 
+   def setup(self, firstName='', lastName='', nickName='', lang=''):
+      self.firstName = firstName
+      self.lastName = lastName
+      self.nickName = nickName
+      self.lang = lang
+
+
    def getId(self):
       return self.uId
+
+
+
+   def getLang(self):
+      return 'ru'
+
+
+
+   # -todo 40 (interact, char) +0: compose hello
+   def getHello(self):
+      return f"Hi, {self.firstName}"
 
 
 
