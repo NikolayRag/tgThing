@@ -37,15 +37,18 @@ class ktFlow():
 
 
 
-	def goCmd(self, _user, _cmd):
+	def goCmd(self, _cmd, _char, _tgUser):
 		log.info(f"Command: {_cmd}")
 
 		if _cmd == '/start':
+			_char.setup(
+				firstName=_tgUser.first_name,
+				lastName=_tgUser.last_name,
+				nickName=_tgUser.username,
+				lang=_tgUser.language_code
+			)
 
-
-			self.botAgent.tgSend(_user, f"started")
-
-			return
+			return _char.getHello()
 
 
 		# -todo 36 (issue, review) +0: dont stop at first
@@ -57,7 +60,7 @@ class ktFlow():
 
 
 	def goAI(self, _char, _msg):
-		aiLang = 'EN'
+		aiLang = _char.getLang()
 		systemmsg = f"default language - {aiLang}"
 		
 		aiA = self.aiAgent.speak([['system',systemmsg],['user',_msg.text]])
@@ -71,7 +74,9 @@ class ktFlow():
 		)
 
 		if isCommand:
-			self.goCmd(cChar.getId(), _msg.text)
+			cmdSay = self.goCmd(_msg.text, cChar, _msg.from_user)
+			cmdSay and self.botAgent.tgSend(cChar.getId(), cmdSay)
+
 			return
 
 
