@@ -37,17 +37,10 @@ class ktFlow():
 
 
 
-	def goCmd(self, _cmd, _char, _tgUser):
+	def goCmd(self, _cmd, _char):
 		log.info(f"Command: {_cmd}")
 
 		if _cmd == '/start':
-			_char.setup(
-				firstName=_tgUser.first_name,
-				lastName=_tgUser.last_name,
-				nickName=_tgUser.username,
-				lang=_tgUser.language_code
-			)
-
 			return _char.getHello()
 
 
@@ -69,12 +62,17 @@ class ktFlow():
 
 
 	def __tgCB(self, _msg, isCommand):
+		#sync names every time as they can be changed elsewhere
 		cChar = ktChar(
-			_msg.from_user.id
+			_msg.from_user.id,
+			firstName=_msg.from_user.first_name,
+			lastName=_msg.from_user.last_name,
+			nickName=_msg.from_user.username,
+			lang=_msg.from_user.language_code
 		)
 
 		if isCommand:
-			cmdSay = self.goCmd(_msg.text, cChar, _msg.from_user)
+			cmdSay = self.goCmd(_msg.text, cChar)
 			cmdSay and self.botAgent.tgSend(cChar.getId(), cmdSay)
 
 			return

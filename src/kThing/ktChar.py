@@ -27,13 +27,27 @@ class ktChar():
 
 
 
-	def setup(self, firstName='', lastName='', nickName='', lang=''):
-		log.info(f"Start user {nickName}")
+	def __init__(self, _id, firstName='', lastName='', nickName='', lang=''):
+		self.uId = _id
 
 		self.firstName = firstName
 		self.lastName = lastName
 		self.nickName = nickName
 		self.lang = lang
+
+
+		kDB.query('charUpdate', {
+			'refId': _id,
+			'refNick': nickName,
+			'refName1': firstName,
+			'refName2': lastName,
+			'refLang': lang
+		})
+
+		dbUser = kDB.query('charGet', {'refId': _id})
+
+		log.info(f"USER: {dbUser}")
+
 
 
 
