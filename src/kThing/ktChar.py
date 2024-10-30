@@ -22,10 +22,6 @@ class ktChar():
 
 
 
-	def __init__(self, _id):
-		self.uId = _id
-
-
 
 	def __init__(self, _id, firstName='', lastName='', nickName='', lang=''):
 		self.uId = _id
