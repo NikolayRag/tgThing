@@ -38,9 +38,9 @@ class ktChar():
 		kDB.query('charUpdate', {
 			'refId': _id,
 			'refNick': nickName,
-			'refName1': firstName,
-			'refName2': lastName,
-			'refLang': lang
+			'refName1': firstName or "",
+			'refName2': lastName or "",
+			'refLang': lang or 'en'
 		})
 
 		dbUser = kDB.query('charGet', {'refId': _id})
