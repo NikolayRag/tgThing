@@ -82,6 +82,29 @@ class ktChar():
 		})
 
 
+	
+	def collect(self, _anchorId):
+		outMsgA = []
+
+
+		while _anchorId:
+			cMsg = kDB.query('charGetMsg', {
+				'idSelf': _anchorId
+			})
+			if cMsg:
+				msgText = cMsg[0][3]
+				msgOrigin = cMsg[0][4]
+				msgReplyId = cMsg[0][6]
+
+				outMsgA.append( [msgOrigin, msgText] )
+
+			
+			_anchorId = msgReplyId
+
+
+		return outMsgA
+
+
 
 	def perform(self, _action):
 		self.getRule(_action) or getDefault(_action) or ""

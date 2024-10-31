@@ -52,15 +52,27 @@ class ktFlow():
 
 
 
-	def goAI(self, _char, _msg):
+	'''
+		anchorId: Message walkback Id to restore conversation
+	'''
+	def goAI(self, _char, anchorId):
 		aiLang = _char.getLang()
 		systemmsg = f"default language - {aiLang}"
-		aiA = self.aiAgent.speak([['system',systemmsg],['user',_msg]])
 
+		cConversation = [['system',systemmsg]]
+
+		for msg in _char.collect(anchorId):
+			cConversation.append( msg )
+		log.info( f"Dialog: {cConversation}")
+
+		aiA = self.aiAgent.speak( cConversation )
 		return aiA
 
 
 
+	'''
+		Flow entry
+	'''
 	def __tgCB(self, _msg, isCommand):
 		#sync names every time as they can be changed elsewhere
 		cChar = ktChar(
@@ -88,13 +100,13 @@ class ktFlow():
 		replyId = _msg.reply_to_message and _msg.reply_to_message.message_id
 		cChar.addHistory(_msg.text, origin='user', idSelf=_msg.message_id, idReply=replyId)
 
-		aiA = self.goAI(cChar, _msg.text)
+		aiA = self.goAI(cChar, _msg.message_id)
 		msgOut = self.botAgent.tgSend(cChar.getId(), f"{aiA['answer']}", replyTo=_msg.id)
 
 		log.info(f"Out > {msgOut.json} >\n")
 
 		replyId = msgOut.reply_to_message and msgOut.reply_to_message.message_id
-		cChar.addHistory(aiA['answer'], origin='ai', idSelf=msgOut.message_id, idReply=replyId)
+		cChar.addHistory(aiA['answer'], origin='assistant', idSelf=msgOut.message_id, idReply=replyId)
 
 
 

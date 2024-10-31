@@ -19,7 +19,7 @@ class DBDefs():
 
 			charId INTEGER NOT NULL,
 			content TEXT NOT NULL,
-			origin TEXT CHECK( origin IN ('user','ai','robot') ),
+			origin TEXT CHECK( origin IN ('user','assistant') ),
 			idSelf INTEGER,
 			idReply INTEGER
 		)
@@ -38,6 +38,7 @@ class DBDefs():
 			refLang=excluded.refLang,
 			stamp=excluded.stamp;
 		''',
+
 		'charGet': '''
 			SELECT * FROM Chars WHERE refId=:refId
 		''',
@@ -47,4 +48,7 @@ class DBDefs():
 			VALUES (:stamp, :charId, :content, :origin, :idSelf, :idReply)
 		''',
 
+		'charGetMsg': '''
+			SELECT * FROM Messages WHERE idSelf=:idSelf
+		''',
 	}
