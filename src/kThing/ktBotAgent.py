@@ -113,12 +113,13 @@ class ktBotAgent():
 
 		markKeys = self.__webAppKeyboard()
 
-		sendFn(_id,
+		sentMsg = sendFn(_id,
 			_msgOut,
 			reply_to_message_id= replyTo,
 			parse_mode= "Markdown",
 			reply_markup= markKeys
 		)
+		return sentMsg
 
 
 
