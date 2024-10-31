@@ -53,10 +53,14 @@ class ktFlow():
 
 
 	def goAI(self, _char, _msg):
+		_char.addQ(_msg)
+
 		aiLang = _char.getLang()
 		systemmsg = f"default language - {aiLang}"
-		
-		aiA = self.aiAgent.speak([['system',systemmsg],['user',_msg.text]])
+		aiA = self.aiAgent.speak([['system',systemmsg],['user',_msg]])
+
+		_char.addA(aiA['answer'])
+
 		return aiA
 
 
@@ -71,6 +75,7 @@ class ktFlow():
 			lang=_msg.from_user.language_code
 		)
 
+
 		if isCommand:
 			cmdSay = self.goCmd(_msg.text, cChar)
 			cmdSay and self.botAgent.tgSend(cChar.getId(), cmdSay)
@@ -80,11 +85,13 @@ class ktFlow():
 
 		self.botAgent.tgDecorate(cChar.getId())
 
-		cChar.addQ(_msg.text)
-		aiA = self.goAI(cChar, _msg)
-		cChar.addA(aiA['answer'])
 
-		self.botAgent.tgSend(cChar.getId(), f"{aiA['answer']}", replyTo=_msg.id)
+		log.info(f"In < {_msg.json} <\n")
+
+		aiA = self.goAI(cChar, _msg.text)
+		msgOut = self.botAgent.tgSend(cChar.getId(), f"{aiA['answer']}", replyTo=_msg.id)
+
+		log.info(f"Out > {msgOut.json} >\n")
 
 
 
