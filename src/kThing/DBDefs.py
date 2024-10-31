@@ -11,6 +11,18 @@ class DBDefs():
 			refName2 TEXT NOT NULL,
 			refLang TEXT NOT NULL
 		)
+	''',
+	'''
+		CREATE TABLE IF NOT EXISTS Messages (
+			id INTEGER PRIMARY KEY,
+			stamp INTEGER,
+
+			charId INTEGER NOT NULL,
+			content TEXT NOT NULL,
+			origin TEXT CHECK( origin IN ('user','ai','robot') ),
+			idSelf INTEGER,
+			idReply INTEGER
+		)
 	'''
 	]
 
@@ -26,8 +38,13 @@ class DBDefs():
 			refLang=excluded.refLang,
 			stamp=excluded.stamp;
 		''',
-
 		'charGet': '''
 			SELECT * FROM Chars WHERE refId=:refId
-		'''
+		''',
+
+		'charAddMsg': '''
+			INSERT INTO Messages (stamp, charId, content, origin, idSelf, idReply)
+			VALUES (:stamp, :charId, :content, :origin, :idSelf, :idReply)
+		''',
+
 	}

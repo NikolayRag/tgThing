@@ -10,6 +10,9 @@ It is specifically focused on impersonated AI behavior - interpreting and respon
 class ktChar():
 	uId = 0
 
+	refId = 0
+	exists = False
+
 	firstName = ''
 	lastName = ''
 	nickName = ''
@@ -24,7 +27,7 @@ class ktChar():
 
 
 	def __init__(self, _id, firstName='', lastName='', nickName='', lang=''):
-		self.uId = _id
+		self.refId = _id
 
 		self.firstName = firstName
 		self.lastName = lastName
@@ -41,14 +44,16 @@ class ktChar():
 		})
 
 		dbUser = kDB.query('charGet', {'refId': _id})
+		self.uId = dbUser[0][0]
 
 		log.info(f"USER: {dbUser}")
 
 
 
 
+
 	def getId(self):
-		return self.uId
+		return self.refId
 		
 
    # -todo 40 (interact, char) +0: compose hello
@@ -67,14 +72,24 @@ class ktChar():
 	'''
 	Add message to personal history as user query
 	'''
-	def addQ(self, _msg):
-		return
+	def addHistory(self, _content, origin, idSelf, idReply):
+		kDB.query('charAddMsg', {
+			'charId': self.uId,
+			'content': _content,
+			'origin': origin,
+			'idSelf': idSelf,
+			'idReply': idReply
+		})
+
+
+
+	def perform(self, _action):
+		self.getRule(_action) or getDefault(_action) or ""
+
 
 
 	'''
 	Add message to personal history as AI answer
 	'''
-	def addA(self, _msg):
-		return
 
 
