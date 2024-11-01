@@ -102,7 +102,7 @@ class ktChar():
 			_anchorId = msgReplyId
 
 
-		return outMsgA
+		return reversed(outMsgA)
 
 
 
