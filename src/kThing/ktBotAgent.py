@@ -73,7 +73,8 @@ class ktBotAgent():
 		isMsgCommand = False
 
 		#CB with 
-		if isApp:
+		log.info(f"Sys: {_message.content_type}")
+		if _message.content_type=='web_app_data':
 			webAppData = _message.web_app_data
 
 			if webAppData.button_text in self.cKeyboard:
@@ -84,12 +85,22 @@ class ktBotAgent():
 
 			return
 
+
+		if _message.content_type=='new_chat_members':
+			return
+
+
+		if _message.content_type=='left_chat_member':
+			return
+
+
+
 		if telebot.util.is_command(_message.text):
 			isMsgCommand = True
 
 
-		if self.messageCB:
-			self.messageCB(_message, isMsgCommand)
+		if _message.content_type in TGTypesUser:
+			self.messageCB and self.messageCB(_message, isMsgCommand)
 
 
 
@@ -143,8 +154,9 @@ class ktBotAgent():
 	def __init__(self, _key):
 		self.tgBotInstance = telebot.TeleBot(_key)
 
-		self.tgBotInstance.register_message_handler(self.__listener, content_types=self.TGTypesUser)
-		self.tgBotInstance.register_message_handler(lambda m:self.__listener(m,isApp=True), content_types=self.TGTypesSystem)
+		self.tgBotInstance.register_message_handler(self.__listener, func=lambda x:True)
+#		self.tgBotInstance.register_message_handler(self.__listener, content_types=self.TGTypesUser)
+#		self.tgBotInstance.register_message_handler(lambda m:self.__listener(m,isApp=True), content_types=self.TGTypesSystem)
 
 
 
