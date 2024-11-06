@@ -129,6 +129,22 @@ class ktBotAgent():
 		return sentMsg
 
 
+	def tgSendPhoto(self, _id, _msgOut, _photoOut, replyTo=None):
+		sendFn = self.tgBotInstance.send_photo
+
+		markKeys = self.__webAppKeyboard()
+		ph = telebot.types.InputFile(_photoOut)
+
+		sentMsg = sendFn(_id,
+			photo=ph,
+			caption=_msgOut,
+			reply_to_message_id= replyTo,
+			parse_mode= "Markdown",
+			reply_markup= markKeys
+		)
+		return sentMsg
+
+
 
 ### PUBLIC ###
 

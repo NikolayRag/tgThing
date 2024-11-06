@@ -1,6 +1,9 @@
+import base64
+
 from .support import *
 
 from .ktChar import *
+from .tools.tool_fusionbrain import *
 
 
 '''
@@ -51,6 +54,19 @@ class ktFlow():
 
 			self.botAgent.shut()
 
+
+		if cmdA[0] == '/img':
+			api = Fuzzb('https://api-key.fusionbrain.ai/', api_key='', secret_key='')
+			uuid = api.generate(" ".join(cmdA[1:]))
+			image = api.check_generation(uuid)[0]
+
+			outFile = base64.decodebytes(image.encode('ascii'))
+			with open (f"img_{uuid}.jpg" , 'wb') as imgFile:
+				imgFile.write(outFile)
+
+			self.botAgent.tgSendPhoto(_char.getId(), " ".join(cmdA[1:]), f"img_{uuid}.jpg")
+
+			log.error('Fuzed')
 
 
 
