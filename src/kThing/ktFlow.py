@@ -62,7 +62,7 @@ class ktFlow():
 			image = api.check_generation(uuid)[0]
 
 			outFile = base64.decodebytes(image.encode('ascii'))
-			self.botAgent.tgSendPhoto(_char.getId(), f"Готово: {' '.join(cmdA[1:])}", io.BytesIO(outFile))
+			self.botAgent.tgSend(_char.getId(), f"Готово: {' '.join(cmdA[1:])}", photoOut=io.BytesIO(outFile))
 
 			log.error('Fuzed')
 

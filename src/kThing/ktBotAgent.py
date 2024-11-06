@@ -115,33 +115,31 @@ class ktBotAgent():
 		_msgOut (string): message
 		replyTo (int): message to reply
 	'''
-	def tgSend(self, _id, _msgOut, replyTo=None):
+	def tgSend(self, _id, _msgOut, replyTo=None, photoOut=None):
 		sendFn = self.tgBotInstance.send_message
 
 		markKeys = self.__webAppKeyboard()
+		sendArgs = {
+			'chat_id': _id,
+			'text': _msgOut,
+			'reply_to_message_id': replyTo,
+			'parse_mode': "Markdown",
+			'reply_markup': markKeys,
+		}
 
-		sentMsg = sendFn(_id,
-			_msgOut,
-			reply_to_message_id= replyTo,
-			parse_mode= "Markdown",
-			reply_markup= markKeys
-		)
-		return sentMsg
+		if photoOut:
+			sendFn = self.tgBotInstance.send_photo
+
+			ph = telebot.types.InputFile(photoOut)
+			
+			del sendArgs['text']
+			sendArgs.update({
+				'photo': ph,
+				'caption': _msgOut,
+			})
 
 
-	def tgSendPhoto(self, _id, _msgOut, _photoOut, replyTo=None):
-		sendFn = self.tgBotInstance.send_photo
-
-		markKeys = self.__webAppKeyboard()
-		ph = telebot.types.InputFile(_photoOut)
-
-		sentMsg = sendFn(_id,
-			photo=ph,
-			caption=_msgOut,
-			reply_to_message_id= replyTo,
-			parse_mode= "Markdown",
-			reply_markup= markKeys
-		)
+		sentMsg = sendFn(**sendArgs)
 		return sentMsg
 
 
