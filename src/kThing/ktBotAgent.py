@@ -71,7 +71,7 @@ class ktBotAgent():
 
 		#CB with 
 		log.info(f"Message: {_message.content_type}")
-		if _message.content_type in TGTypesSystem:
+		if _message.content_type in self.TGTypesSystem:
 			self.messageCB and self.messageCB(_message,
 				isSystem=True
 			)
@@ -91,9 +91,8 @@ class ktBotAgent():
 
 
 
+		if _message.content_type in self.TGTypesUser:
 
-
-		if _message.content_type in TGTypesUser:
 			isMsgCommand = telebot.util.is_command(_message.text)
 			self.messageCB and self.messageCB(_message,
 				isCommand=isMsgCommand
