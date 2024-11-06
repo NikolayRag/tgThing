@@ -61,10 +61,15 @@ class ktFlow():
 			uuid = api.generate(" ".join(cmdA[1:]))
 			image = api.check_generation(uuid)[0]
 
-			outFile = base64.decodebytes(image.encode('ascii'))
-			self.botAgent.tgSend(_char.getId(), f"Готово: {' '.join(cmdA[1:])}", photoOut=io.BytesIO(outFile))
+			if not image:
+				self.botAgent.tgSend(_char.getId(), "Image generation delayed")
+				log.error('Fuzzb error')
+				return
 
-			log.error('Fuzed')
+			outFile = base64.decodebytes(image.encode('ascii'))
+			self.botAgent.tgSend(_char.getId(), f"Image ready: {' '.join(cmdA[1:])}", photoOut=io.BytesIO(outFile))
+
+			log.info('Fuzzb ok')
 
 
 
