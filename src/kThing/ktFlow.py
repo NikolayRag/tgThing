@@ -40,15 +40,17 @@ class ktFlow():
 	def goCmd(self, _cmd, _char):
 		log.info(f"Command: {_cmd}")
 
-		if _cmd == '/start':
+		cmdA = _cmd.split()
+		if cmdA[0] == '/start':
 			return _char.getHello()
 
 
 		# -todo 36 (issue, review) +0: dont stop at first
-		if _cmd == '/stopstop':
+		if cmdA[0] == '/stopover':
+			log.error('Stop pending')
+
 			self.botAgent.shut()
 
-			log.error('Stop pending')
 
 
 
