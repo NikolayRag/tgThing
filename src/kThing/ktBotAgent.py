@@ -68,7 +68,6 @@ class ktBotAgent():
 	'''
 	def __listener (self, _message):
 		_chatId = _message.chat.id
-		isMsgCommand = False
 
 		#CB with 
 		log.info(f"Message: {_message.content_type}")
@@ -92,11 +91,10 @@ class ktBotAgent():
 
 
 
-		if telebot.util.is_command(_message.text):
-			isMsgCommand = True
 
 
 		if _message.content_type in TGTypesUser:
+			isMsgCommand = telebot.util.is_command(_message.text)
 			self.messageCB and self.messageCB(_message,
 				isCommand=isMsgCommand
 			)
