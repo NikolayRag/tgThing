@@ -71,7 +71,7 @@ class ktBotAgent():
 		isMsgCommand = False
 
 		#CB with 
-		log.info(f"Sys: {_message.content_type}")
+		log.info(f"Message: {_message.content_type}")
 		if _message.content_type in TGTypesSystem:
 			self.messageCB and self.messageCB(_message,
 				isSystem=True
@@ -161,7 +161,7 @@ class ktBotAgent():
 	'''Set callback for message listener.
 	
 	Args:
-		_cb (callable): Function to be called
+		_cb callable(message,isCommand,isSystem): Function to be called
 	'''
 	def setMessageCB(self, _cb):
 		if not callable(_cb):
