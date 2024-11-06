@@ -16,7 +16,7 @@ TG interface.
 
 '''
 class ktBotAgent():
-	TGTypesSystem = ['web_app_data'] #, 'invoice', 'successful_payment', 'connected_website', 'game']
+	TGTypesSystem = ['web_app_data', 'new_chat_members', 'left_chat_member', 'invoice', 'successful_payment', 'connected_website', 'game']
 	TGTypesUser = ['text', 'audio', 'document', 'animation', 'photo', 'sticker', 'video', 'video_note', 'voice', 'contact', 'location', 'venue', 'dice', 'poll', 'passport_data']
 
 
@@ -62,14 +62,12 @@ class ktBotAgent():
 
 	Args:
 		_message (json): from tg
-		isApp (bool): is WebApp reply flag
 
 	Returns:
 		None
 	'''
-	def __listener (self, _message, isApp=False):
+	def __listener (self, _message):
 		_chatId = _message.chat.id
-		msgReply= None
 		isMsgCommand = False
 
 		#CB with 
@@ -156,8 +154,6 @@ class ktBotAgent():
 		self.tgBotInstance = telebot.TeleBot(_key)
 
 		self.tgBotInstance.register_message_handler(self.__listener, func=lambda x:True)
-#		self.tgBotInstance.register_message_handler(self.__listener, content_types=self.TGTypesUser)
-#		self.tgBotInstance.register_message_handler(lambda m:self.__listener(m,isApp=True), content_types=self.TGTypesSystem)
 
 
 
