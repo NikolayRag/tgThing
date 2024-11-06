@@ -41,12 +41,22 @@ class ktAIAgent ():
 			"presence_penalty": 0,
 		}
 
-		response = requests.post(self.url, headers=headers, json=data).json()
+		tries = 3
+		while tries:
+			try:
+				response = requests.post(self.url, headers=headers, json=data).json()
 
-		return {
-			'answer': response['choices'][0]['message']['content'],
-			'full': response
-		}
+				return {
+					'answer': response['choices'][0]['message']['content'],
+					'full': response
+				}
+
+			except Exception as e:
+				log.error(f"AI error: {e}")
+
+			tries -= 1
+
+
 
 
 
