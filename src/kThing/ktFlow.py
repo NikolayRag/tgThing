@@ -73,7 +73,11 @@ class ktFlow():
 	'''
 		Flow entry
 	'''
-	def __tgCB(self, _msg, isCommand):
+	def __tgCB(self, _msg, isCommand=False, isSystem=False):
+		if isSystem:
+			return
+
+
 		#sync names every time as they can be changed elsewhere
 		cChar = ktChar(
 			_msg.from_user.id,

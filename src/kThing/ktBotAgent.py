@@ -74,23 +74,22 @@ class ktBotAgent():
 
 		#CB with 
 		log.info(f"Sys: {_message.content_type}")
-		if _message.content_type=='web_app_data':
-			webAppData = _message.web_app_data
-
-			if webAppData.button_text in self.cKeyboard:
-				self.cKeyboard[webAppData.button_text] = webAppData.data
-
-			msgReply = webAppData.button_text
-			self.tgSend( _chatId, msgReply)
-
-			return
+		if _message.content_type in TGTypesSystem:
+			self.messageCB and self.messageCB(_message,
+				isSystem=True
+			)
 
 
-		if _message.content_type=='new_chat_members':
-			return
+			#specific internal case
+			if _message.content_type=='web_app_data':
+				webAppData = _message.web_app_data
 
+				if webAppData.button_text in self.cKeyboard:
+					self.cKeyboard[webAppData.button_text] = webAppData.data
 
-		if _message.content_type=='left_chat_member':
+				msgReply = webAppData.button_text
+				self.tgSend( _chatId, msgReply)
+
 			return
 
 
@@ -100,7 +99,9 @@ class ktBotAgent():
 
 
 		if _message.content_type in TGTypesUser:
-			self.messageCB and self.messageCB(_message, isMsgCommand)
+			self.messageCB and self.messageCB(_message,
+				isCommand=isMsgCommand
+			)
 
 
 
