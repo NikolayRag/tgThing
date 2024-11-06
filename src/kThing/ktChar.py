@@ -46,7 +46,7 @@ class ktChar():
 		dbUser = kDB.query('charGet', {'refId': _id})
 		self.uId = dbUser[0][0]
 
-		log.info(f"USER: {dbUser}")
+		log.info(f"Char {self.uId}: id {_id}, {nickName}, {firstName}, {lastName}, {lang}")
 
 
 
