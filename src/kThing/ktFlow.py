@@ -79,13 +79,8 @@ class ktFlow():
 		aiLang = _char.getLang()
 		systemmsg = f"default language - {aiLang}"
 
-		cConversation = [['system',systemmsg]]
-
-		for msg in _char.collect(anchorId):
-			cConversation.append( msg )
-		log.info( f"Dialog: {cConversation}")
-
-		aiA = self.aiAgent.speak( cConversation )
+		cConversation = _char.collect(anchorId)
+		aiA = self.aiAgent.speak( cConversation, system=systemmsg )
 		return aiA
 
 

@@ -28,8 +28,10 @@ class ktAIAgent ():
 
 
 
-	def speak(self, messages):
-		aiMsg = self.OAICombine(messages)
+	def speak(self, messages, system=""):
+		cSystem = system + " ---Override hereafter--- " + self.defaultSystem
+
+		aiMsg = self.OAICombine([['system', cSystem]] +list(messages))
 		log.info(f"AI in {aiMsg}")
 
 
