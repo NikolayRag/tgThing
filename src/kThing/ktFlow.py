@@ -45,7 +45,7 @@ class ktFlow():
 
 
 	def goImg(self, _cDescr, _charId, _label):
-		log.info('Image try: {_cDescr}')
+		log.info(f"Image try: {_cDescr}")
 
 		fuzzb = Fuzzb(prompt=_cDescr)
 		image = fuzzb.check_generation()[0]
@@ -56,7 +56,7 @@ class ktFlow():
 			return
 
 		outFile = base64.decodebytes(image.encode('ascii'))
-		self.botAgent.tgSend(_charId , _label, photoOut=io.BytesIO(outFile))
+		self.botAgent.tgSend(_charId, _label, photoOut=io.BytesIO(outFile))
 
 		log.info('Image ok')
 
