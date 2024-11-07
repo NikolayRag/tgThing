@@ -49,6 +49,8 @@ class kThing():
 
 
 
+	def setBehaviorSystem(self, directiveSystem):
+		ktAIAgent.setSystem(directiveSystem)
 
 
 

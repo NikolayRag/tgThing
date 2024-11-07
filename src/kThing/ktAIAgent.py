@@ -14,6 +14,13 @@ class ktAIAgent ():
 
 	api_key = ''
 
+	defaultSystem = ''
+
+
+
+	@classmethod
+	def setSystem(cls, system):
+		cls.defaultSystem = system
 
 
 	def __init__ (self, _key):
