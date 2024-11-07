@@ -57,16 +57,24 @@ class ktFlow():
 
 
 		if cmdA[0] == '/img':
-			fuzzb = Fuzzb(prompt=" ".join(cmdA[1:]))
+			cDescr = " ".join(cmdA[1:])
+			self.genImg(cDescr, _char.getId(), f"Image: {cDescr}")
+
+
+
+	def genImg(self, _cDescr, _charId, _label):
+			log.info('Fuzzb try: {_cDescr}')
+
+			fuzzb = Fuzzb(prompt=_cDescr)
 			image = fuzzb.check_generation()[0]
 
 			if not image:
-				self.botAgent.tgSend(_char.getId(), "Image generation delayed")
+				self.botAgent.tgSend(_charId , "Image generation delayed")
 				log.error('Fuzzb error')
 				return
 
 			outFile = base64.decodebytes(image.encode('ascii'))
-			self.botAgent.tgSend(_char.getId(), f"Image ready: {' '.join(cmdA[1:])}", photoOut=io.BytesIO(outFile))
+			self.botAgent.tgSend(_charId , _label, photoOut=io.BytesIO(outFile))
 
 			log.info('Fuzzb ok')
 
