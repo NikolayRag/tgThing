@@ -1,6 +1,8 @@
 import base64
 import io
 import json
+import threading
+
 
 from .support import *
 
@@ -91,6 +93,9 @@ class ktFlow():
 		cConversation = _char.collect(anchorId)
 		aiA = self.aiAgent.speak( cConversation, system=systemmsg )['answer']
 		aiJS = json.loads(aiA)
+
+		if aiJS['queryActSpecific'] == 'do image creation':
+			threading.Thread(target=lambda:self.genImg(aiJS['exact task description'], _char.getId(), "")).start()
 
 		return aiJS['answerText']
 
