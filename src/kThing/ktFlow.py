@@ -44,6 +44,24 @@ class ktFlow():
 
 
 
+	def goImg(self, _cDescr, _charId, _label):
+		log.info('Image try: {_cDescr}')
+
+		fuzzb = Fuzzb(prompt=_cDescr)
+		image = fuzzb.check_generation()[0]
+
+		if not image:
+			self.botAgent.tgSend(_charId , "Image generation delayed")
+			log.error('Image error')
+			return
+
+		outFile = base64.decodebytes(image.encode('ascii'))
+		self.botAgent.tgSend(_charId , _label, photoOut=io.BytesIO(outFile))
+
+		log.info('Image ok')
+
+
+
 	def goCmd(self, _cmd, _char):
 		log.info(f"Command: {_cmd}")
 
@@ -61,25 +79,7 @@ class ktFlow():
 
 		if cmdA[0] == '/img':
 			cDescr = " ".join(cmdA[1:])
-			self.genImg(cDescr, _char.getId(), f"Image: {cDescr}")
-
-
-
-	def genImg(self, _cDescr, _charId, _label):
-			log.info('Fuzzb try: {_cDescr}')
-
-			fuzzb = Fuzzb(prompt=_cDescr)
-			image = fuzzb.check_generation()[0]
-
-			if not image:
-				self.botAgent.tgSend(_charId , "Image generation delayed")
-				log.error('Fuzzb error')
-				return
-
-			outFile = base64.decodebytes(image.encode('ascii'))
-			self.botAgent.tgSend(_charId , _label, photoOut=io.BytesIO(outFile))
-
-			log.info('Fuzzb ok')
+			self.goImg(cDescr, _char.getId(), f"Image: {cDescr}")
 
 
 
@@ -95,7 +95,7 @@ class ktFlow():
 		aiJS = json.loads(aiA)
 
 		if aiJS['queryActSpecific'] == 'do image creation':
-			threading.Thread(target=lambda:self.genImg(aiJS['exact task description'], _char.getId(), "")).start()
+			threading.Thread(target=lambda:self.goImg(aiJS['exact task description'], _char.getId(), "")).start()
 
 		return aiJS['answerText']
 
