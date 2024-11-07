@@ -57,9 +57,8 @@ class ktFlow():
 
 
 		if cmdA[0] == '/img':
-			api = Fuzzb('https://api-key.fusionbrain.ai/', api_key='', secret_key='')
-			uuid = api.generate(" ".join(cmdA[1:]))
-			image = api.check_generation(uuid)[0]
+			fuzzb = Fuzzb(prompt=" ".join(cmdA[1:]))
+			image = fuzzb.check_generation()[0]
 
 			if not image:
 				self.botAgent.tgSend(_char.getId(), "Image generation delayed")
