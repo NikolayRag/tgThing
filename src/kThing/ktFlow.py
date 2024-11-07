@@ -80,9 +80,10 @@ class ktFlow():
 		systemmsg = f"default language - {aiLang}"
 
 		cConversation = _char.collect(anchorId)
-		aiA = self.aiAgent.speak( cConversation, system=systemmsg )
-		return aiA
+		aiA = self.aiAgent.speak( cConversation, system=systemmsg )['answer']
+		aiJS = json.loads(aiA)
 
+		return aiJS['answerText']
 
 
 	'''
@@ -120,12 +121,12 @@ class ktFlow():
 		cChar.addHistory(_msg.text, origin='user', idSelf=_msg.message_id, idReply=replyId)
 
 		aiA = self.goAI(cChar, _msg.message_id)
-		msgOut = self.botAgent.tgSend(cChar.getId(), f"{aiA['answer']}", replyTo=_msg.id)
+		msgOut = self.botAgent.tgSend(cChar.getId(), aiA, replyTo=_msg.id)
 
 		log.info(f"Out > {msgOut.json} >\n")
 
 		replyId = msgOut.reply_to_message and msgOut.reply_to_message.message_id
-		cChar.addHistory(aiA['answer'], origin='assistant', idSelf=msgOut.message_id, idReply=replyId)
+		cChar.addHistory(aiA, origin='assistant', idSelf=msgOut.message_id, idReply=replyId)
 
 
 
