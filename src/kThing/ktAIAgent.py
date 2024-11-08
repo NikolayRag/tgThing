@@ -28,6 +28,22 @@ class ktAIAgent ():
 
 
 
+	'''
+	full:
+		id:
+		object:
+		created:
+		model:
+		choices[]:
+			index:
+			message:
+				role:
+				content:
+				refusal:
+			...
+		useage:
+			...
+	'''
 	def speak(self, messages, system=""):
 		cSystem = system + " ---Override hereafter--- " + self.defaultSystem
 
