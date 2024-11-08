@@ -110,7 +110,7 @@ class ktFlow():
 
 		#sync names every time as they can be changed elsewhere
 		cChar = ktChar(
-			_msg.from_user.id,
+			refId=_msg.from_user.id,
 			firstName=_msg.from_user.first_name,
 			lastName=_msg.from_user.last_name,
 			nickName=_msg.from_user.username,

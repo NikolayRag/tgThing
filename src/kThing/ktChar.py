@@ -10,9 +10,9 @@ It is specifically focused on impersonated AI behavior - interpreting and respon
 class ktChar():
 	uId = 0
 
-	refId = 0
 	exists = False
 
+	refId = 0
 	firstName = ''
 	lastName = ''
 	nickName = ''
@@ -26,8 +26,8 @@ class ktChar():
 
 
 
-	def __init__(self, _id, firstName='', lastName='', nickName='', lang=''):
-		self.refId = _id
+	def __init__(self, refId, firstName'', lastName='', nickName='', lang=''):
+		self.refId = refId
 
 		self.firstName = firstName
 		self.lastName = lastName
@@ -36,17 +36,17 @@ class ktChar():
 
 
 		kDB.query('charUpdate', {
-			'refId': _id,
+			'refId': refId,
 			'refNick': nickName,
 			'refName1': firstName or "",
 			'refName2': lastName or "",
 			'refLang': lang or 'en'
 		})
 
-		dbUser = kDB.query('charGet', {'refId': _id})
+		dbUser = kDB.query('charGet', {'refId': refId})
 		self.uId = dbUser[0][0]
 
-		log.info(f"Char {self.uId}: id {_id}, {nickName}, {firstName}, {lastName}, {lang}")
+		log.info(f"Char {self.uId}: id {refId}, {nickName}, {firstName}, {lastName}, {lang}")
 
 
 
