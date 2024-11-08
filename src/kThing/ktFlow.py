@@ -88,11 +88,18 @@ class ktFlow():
 	'''
 	def goAI(self, _char, anchorId):
 		aiLang = _char.getLang()
-		systemmsg = f"default language - {aiLang}"
+		aiStamp = str(datetime.now())
+		systemmsg = f"Time is {aiStamp}; Default language - {aiLang}; \n"
 
 		cConversation = _char.collect(anchorId)
 		aiA = self.aiAgent.speak( cConversation, system=systemmsg )
 		aiJS = json.loads(aiA['content'])
+
+		log.info(f"GPT responce{aiJS}")
+
+
+		if aiJS['queryActSpecific'] == 'do remember':
+			return ",\n".join(aiJS['stamps'])
 
 		if aiJS['queryActSpecific'] == 'do image creation':
 			threading.Thread(target=lambda:self.goImg(aiJS['exact task description'], _char.getId(), "")).start()
