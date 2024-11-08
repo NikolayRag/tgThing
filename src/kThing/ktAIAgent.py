@@ -56,7 +56,7 @@ class ktAIAgent ():
 				response = requests.post(self.url, headers=headers, json=data).json()
 
 				return {
-					'answer': response['choices'][0]['message']['content'],
+					'content': response['choices'][0]['message']['content'],
 					'full': response
 				}
 
