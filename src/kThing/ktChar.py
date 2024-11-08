@@ -26,7 +26,7 @@ class ktChar():
 
 
 
-	def __init__(self, refId, firstName'', lastName='', nickName='', lang=''):
+	def __init__(self, refId, firstName='', lastName='', nickName='', lang=''):
 		self.refId = refId
 
 		self.firstName = firstName
