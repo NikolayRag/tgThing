@@ -96,9 +96,11 @@ class ktFlow():
 		anchorId: Message walkback Id to restore conversation
 	'''
 	def goAI(self, _char, anchorId):
-		aiLang = _char.getLang()
+		aiDayframe = 'mid day'
+		aiLocation = 'Moscow'
 		aiStamp = str(datetime.now())
-		systemmsg = f"Time is {aiStamp}; Default language - {aiLang}; \n"
+		aiLang = _char.getLang()
+		systemmsg = f"Ambiguous timeframe is {aiDayframe}; Location is {aiLocation}; Time is {aiStamp}; Default language - {aiLang}; \n"
 
 		cConversation = _char.collect(anchorId)
 		aiContent = self.aiAgent.speak( cConversation, system=systemmsg )['content']
