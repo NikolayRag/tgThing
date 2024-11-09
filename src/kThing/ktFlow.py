@@ -1,3 +1,8 @@
+'''
+Dispatch messages that arrived from TG callback to AI and back to TG.
+Impersonate `ktChar` account with individual characteristics.
+'''
+
 import datetime
 import base64
 import io
@@ -109,7 +114,7 @@ class ktFlow():
 
 
 	'''
-		Flow entry
+		Flow main cycle
 	'''
 	def __tgCB(self, _msg, isCommand=False, isSystem=False):
 		if isSystem:
