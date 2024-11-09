@@ -101,10 +101,15 @@ class ktFlow():
 		systemmsg = f"Time is {aiStamp}; Default language - {aiLang}; \n"
 
 		cConversation = _char.collect(anchorId)
-		aiA = self.aiAgent.speak( cConversation, system=systemmsg )
-		aiJS = json.loads(aiA['content'])
+		aiContent = self.aiAgent.speak( cConversation, system=systemmsg )['content']
 
-		log.info(f"GPT responce{aiJS}")
+		aiTrim = aiContent
+		if aiContent[3:7]=='json':
+			aiTrim = aiContent[7:-3]
+
+		log.info(f"GPT A: {aiTrim}")
+		aiJS = json.loads(aiTrim)
+
 
 
 		if aiJS['queryActSpecific'] == 'do remember':
